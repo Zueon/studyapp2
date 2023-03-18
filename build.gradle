@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.9'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'com.github.node-gradle.node' version '2.2.3'
+}
+
+group = 'com.zueon'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+node {
+    version = '16.14.0'
+    download = true
+    nodeModulesDir = file("${projectDir}/src/main/resources/static")
+
+}
+
+task copyFrontLib(type: Copy) {
+    from "${projectDir}/src/main/resources/static"
+    into "${projectDir}/build/resources/main/static/."
+
+}
+
+copyFrontLib.dependsOn npmInstall
+compileJava.dependsOn copyFrontLib
+
+
+dependencies {
+    // 모니터링 기능 등을 쉽게 추가할 수 있는 패키지
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // JPA를 사용하기 위해서 추가하는 패키지
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // 인증, 인가 등을 쉽게 개발할 수 있도록 해주는 패키지
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // 프론트 개발을 위한 HTML 템플릿 엔진
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // Web 관련 개발을 위한 패키지
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    // 설정 파일 자동완성 등을 제공해주는 패키지
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
