@@ -1,13 +1,12 @@
 package com.zueon.springbootapp.account.domain.entity;
 
-import com.zueon.springbootapp.account.domain.support.ListStringConverter;
 import com.zueon.springbootapp.domain.entity.AuditingEntity;
+import com.zueon.springbootapp.settings.controller.Profile;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -111,5 +110,17 @@ public class Account extends AuditingEntity {
         Account account = (Account) obj;
 
         return id != null && Objects.equals(id, account.id);
+    }
+
+    public void updateProfile(com.zueon.springbootapp.settings.controller.Profile profile){
+        if (this.profile == null) {
+            this.profile = new Profile();
+        }
+
+        this.profile.bio = profile.getBio();
+        this.profile.url = profile.getUrl();
+        this.profile.job = profile.getJob();
+        this.profile.location = profile.getLocation();
+
     }
 }

@@ -4,6 +4,7 @@ import com.zueon.springbootapp.account.domain.UserAccount;
 import com.zueon.springbootapp.account.domain.entity.Account;
 import com.zueon.springbootapp.account.endpoint.controller.SignUpForm;
 import com.zueon.springbootapp.account.infra.AccountRepository;
+import com.zueon.springbootapp.settings.controller.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -91,6 +92,12 @@ public class AccountService implements UserDetailsService {
     public void verify(Account account){
         account.verified();
         login(account);
+
+    }
+
+    public void updateProfile(Account account, Profile profile){
+        account.updateProfile(profile);
+        accountRepository.save(account);
 
     }
 }
