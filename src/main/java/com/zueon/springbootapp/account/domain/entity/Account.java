@@ -2,7 +2,6 @@ package com.zueon.springbootapp.account.domain.entity;
 
 import com.zueon.springbootapp.domain.entity.AuditingEntity;
 import com.zueon.springbootapp.settings.controller.NotificationForm;
-import com.zueon.springbootapp.settings.controller.Profile;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -140,6 +139,11 @@ public class Account extends AuditingEntity {
         this.notificationSetting.studyUpdatedByEmail = notificationForm.isStudyUpdatedByEmail();
         this.notificationSetting.studyRegistrationResultByEmailByEmail = notificationForm.isStudyRegistrationResultByEmail();
         this.notificationSetting.studyRegistrationResultByEmailByWeb = notificationForm.isStudyRegistrationResultByWeb();
+    }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+
     }
 
 }

@@ -1,9 +1,12 @@
-package com.zueon.springbootapp.settings.controller;
+package com.zueon.springbootapp.settings.controller.validator;
 
 
+import com.zueon.springbootapp.settings.controller.PasswordForm;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class PasswordValidtor implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
