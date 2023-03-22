@@ -1,6 +1,7 @@
 package com.zueon.springbootapp.account.domain.entity;
 
 import com.zueon.springbootapp.domain.entity.AuditingEntity;
+import com.zueon.springbootapp.settings.controller.NotificationForm;
 import com.zueon.springbootapp.settings.controller.Profile;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -49,6 +50,8 @@ public class Account extends AuditingEntity {
 
     }
 
+
+
     @Embeddable
     @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @Builder
@@ -69,12 +72,12 @@ public class Account extends AuditingEntity {
     @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @Builder @Getter @ToString
     public static class NotificationSetting {
-        private boolean studyCreatedByEmail;
-        private boolean studyCreatedByWeb;
-        private boolean studyRegistrationResultByEmailByEmail;
-        private boolean studyRegistrationResultByEmailByWeb;
-        private boolean studyUpdatedByEmail;
-        private boolean studyUpdatedByWeb;
+        private boolean studyCreatedByEmail = false;
+        private boolean studyCreatedByWeb = true;
+        private boolean studyRegistrationResultByEmailByEmail = false;
+        private boolean studyRegistrationResultByEmailByWeb = true;
+        private boolean studyUpdatedByEmail = false;
+        private boolean studyUpdatedByWeb = true;
     }
 
     private LocalDateTime joinedAt;
@@ -129,4 +132,14 @@ public class Account extends AuditingEntity {
         this.password = newPassword;
 
     }
+
+    public void updateNotification(NotificationForm notificationForm) {
+        this.notificationSetting.studyCreatedByEmail = notificationForm.isStudyCreatedByEmail();
+        this.notificationSetting.studyCreatedByWeb = notificationForm.isStudyCreatedByWeb();
+        this.notificationSetting.studyUpdatedByWeb = notificationForm.isStudyUpdatedByWeb();
+        this.notificationSetting.studyUpdatedByEmail = notificationForm.isStudyUpdatedByEmail();
+        this.notificationSetting.studyRegistrationResultByEmailByEmail = notificationForm.isStudyRegistrationResultByEmail();
+        this.notificationSetting.studyRegistrationResultByEmailByWeb = notificationForm.isStudyRegistrationResultByWeb();
+    }
+
 }
