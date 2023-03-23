@@ -146,4 +146,8 @@ public class Account extends AuditingEntity {
 
     }
 
+    public boolean isValid(String token){
+        return this.emailToken.equals(token);
+    }
+
 }
