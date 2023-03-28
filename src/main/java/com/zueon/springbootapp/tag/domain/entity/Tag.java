@@ -1,9 +1,6 @@
-package com.zueon.springbootapp.account.domain.entity;
+package com.zueon.springbootapp.tag.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +11,8 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
+@AllArgsConstructor
+@Builder
 public class Tag {
     @Id
     @GeneratedValue
