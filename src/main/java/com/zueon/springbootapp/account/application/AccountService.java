@@ -35,26 +35,19 @@ public class AccountService implements UserDetailsService {
 
     public Account signUp(SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
-        newAccount.generateToken();
         sendVerificationEmail(newAccount);
 
         return newAccount;
     }
 
     private Account saveNewAccount(SignUpForm signUpForm) {
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .nickname(signUpForm.getNickname())
-                .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .notificationSetting(Account.NotificationSetting.builder()
-                        .studyCreatedByWeb(true)
-                        .studyUpdatedByWeb(true)
-                        .studyRegistrationResultByEmailByWeb(true)
-                        .build())
-                .build();
+        Account account = Account.with(
+                signUpForm.getEmail(),
+                signUpForm.getNickname(),
+                passwordEncoder.encode(signUpForm.getPassword()));
+        account.generateToken();
+        return accountRepository.save(account);
 
-        Account newAccount = accountRepository.save(account);
-        return newAccount;
     }
 
     public void sendVerificationEmail(Account newAccount){

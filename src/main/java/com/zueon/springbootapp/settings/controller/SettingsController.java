@@ -1,5 +1,7 @@
 package com.zueon.springbootapp.settings.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zueon.springbootapp.account.application.AccountService;
 import com.zueon.springbootapp.account.domain.entity.Account;
 import com.zueon.springbootapp.account.domain.support.CurrentUser;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,6 +45,7 @@ public class SettingsController {
     private final PasswordValidtor passwordValidtor;
     private final NicknameFormValidator nicknameFormValidator;
     private final TagRepository tagRepository;
+    private final ObjectMapper objectMapper;
 
     @InitBinder("passwordForm")
     public void setPasswordValidtor(WebDataBinder webDataBinder) {
@@ -140,6 +144,21 @@ public class SettingsController {
                 tags.stream()
                         .map(Tag::getTitle)
                         .collect(Collectors.toList()));
+
+        List<String> allTags = tagRepository.findAll()
+                .stream()
+                .map(Tag::getTitle)
+                .collect(Collectors.toList());
+
+        String whitelist = null;
+
+        try {
+            whitelist = objectMapper.writeValueAsString(allTags);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("whitelist", whitelist);
         return SETTINGS_TAGS_VIEW_NAME;
     }
 

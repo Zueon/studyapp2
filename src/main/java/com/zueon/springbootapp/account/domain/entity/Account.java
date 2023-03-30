@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -34,10 +35,10 @@ public class Account extends AuditingEntity {
     private String emailToken;
 
     @Embedded
-    private Profile profile;
+    private Profile profile = new Profile();
 
     @Embedded
-    private NotificationSetting notificationSetting;
+    private NotificationSetting notificationSetting = new NotificationSetting();
 
     @PostLoad
     private void init(){
@@ -86,7 +87,17 @@ public class Account extends AuditingEntity {
     private LocalDateTime emailTokenGeneratedAt;
 
     @ManyToMany
-    private Set<Tag> tags;
+    @ToString.Exclude
+    private Set<Tag> tags = new HashSet<>();
+
+    public static Account with(String email, String nickname, String password){
+        Account account = new Account();
+        account.email = email;
+        account.nickname = nickname;
+        account.password = password;
+
+        return  account;
+    }
 
     public void generateToken(){
         this.emailToken = UUID.randomUUID().toString();
