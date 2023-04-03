@@ -5,13 +5,13 @@ import com.zueon.springbootapp.account.domain.entity.Account;
 import com.zueon.springbootapp.account.domain.entity.Zone;
 import com.zueon.springbootapp.account.endpoint.controller.SignUpForm;
 import com.zueon.springbootapp.account.infra.AccountRepository;
+import com.zueon.springbootapp.mail.EmailMessage;
+import com.zueon.springbootapp.mail.service.EmailService;
 import com.zueon.springbootapp.settings.controller.NotificationForm;
 import com.zueon.springbootapp.settings.controller.Profile;
 import com.zueon.springbootapp.tag.domain.entity.Tag;
 import com.zueon.springbootapp.zone.infra.ZoneRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,7 +32,7 @@ import java.util.Set;
 public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final ZoneRepository zoneRepository;
-    private final JavaMailSender javaMailSender;
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -54,13 +54,14 @@ public class AccountService implements UserDetailsService {
     }
 
     public void sendVerificationEmail(Account newAccount){
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(newAccount.getEmail());
-        mailMessage.setSubject("StudyApp 회원 가입 인증");
+        emailService.sendEmail(
+                EmailMessage.builder()
+                        .to(newAccount.getEmail())
+                        .subject("StudyApp 회원 가입 인증")
+                        .message(String.format("/check-email-token?token=%s&email=%s", newAccount.getEmailToken(), newAccount.getEmail()))
+                        .build()
 
-        mailMessage.setText(String.format("/check-email-token?token=%s&email=%s", newAccount.getEmailToken(), newAccount.getEmail()));
-
-        javaMailSender.send(mailMessage);
+        );
 
     }
 
@@ -121,12 +122,13 @@ public class AccountService implements UserDetailsService {
 
     public void sendLoginLink(Account account){
         account.generateToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(account.getEmail());
-        mailMessage.setSubject("로그인 링크");
-        mailMessage.setText("/login-by-email?token=" + account.getEmailToken() + "&email=" + account.getEmail());
-
-        javaMailSender.send(mailMessage);
+        emailService.sendEmail(
+                EmailMessage.builder()
+                        .to(account.getEmail())
+                        .subject("[StudyApp] 로그인 링크")
+                        .message("/login-by-email?token=" + account.getEmailToken() + "&email=" + account.getEmail())
+                        .build()
+        );
     }
 
     public Set<Tag> getTags(Account account){
