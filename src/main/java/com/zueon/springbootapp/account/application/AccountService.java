@@ -2,11 +2,13 @@ package com.zueon.springbootapp.account.application;
 
 import com.zueon.springbootapp.account.domain.UserAccount;
 import com.zueon.springbootapp.account.domain.entity.Account;
+import com.zueon.springbootapp.account.domain.entity.Zone;
 import com.zueon.springbootapp.account.endpoint.controller.SignUpForm;
 import com.zueon.springbootapp.account.infra.AccountRepository;
 import com.zueon.springbootapp.settings.controller.NotificationForm;
 import com.zueon.springbootapp.settings.controller.Profile;
 import com.zueon.springbootapp.tag.domain.entity.Tag;
+import com.zueon.springbootapp.zone.infra.ZoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,6 +31,7 @@ import java.util.Set;
 @Transactional
 public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
+    private final ZoneRepository zoneRepository;
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
 
@@ -140,5 +143,23 @@ public class AccountService implements UserDetailsService {
         accountRepository.findById(account.getId())
                 .map(Account::getTags)
                 .ifPresent(tags -> tags.remove(tag));
+    }
+
+    public Set<Zone> getZones(Account account){
+        return  accountRepository.findById(account.getId())
+                .orElseThrow()
+                .getZones();
+
+    }
+
+    public void addZone(Account account, Zone zone) {
+        accountRepository.findById(account.getId())
+                .ifPresent(a -> a.getZones().add(zone));
+    }
+
+    public void removeZone(Account account, Zone zone){
+        accountRepository.findById(account.getId())
+                .ifPresent(a -> a.getZones().remove(zone));
+
     }
 }

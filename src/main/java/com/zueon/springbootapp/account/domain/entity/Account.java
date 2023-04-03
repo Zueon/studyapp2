@@ -40,25 +40,9 @@ public class Account extends AuditingEntity {
     @Embedded
     private NotificationSetting notificationSetting = new NotificationSetting();
 
-    @PostLoad
-    private void init(){
-        if (profile == null) {
-            profile = new Profile();
-        }
-
-        if (notificationSetting == null) {
-            notificationSetting = new NotificationSetting();
-        }
-
-    }
-
-
-
     @Embeddable
     @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    @Builder
-    @Getter
-    @ToString
+    @Builder @Getter @ToString
     public static class Profile {
         private String bio;
         private String url;
@@ -89,6 +73,23 @@ public class Account extends AuditingEntity {
     @ManyToMany
     @ToString.Exclude
     private Set<Tag> tags = new HashSet<>();
+
+    @ManyToMany
+    @ToString.Exclude
+    private Set<Zone> zones = new HashSet<>();
+
+    @PostLoad
+    private void init(){
+        if (profile == null) {
+            profile = new Profile();
+        }
+
+        if (notificationSetting == null) {
+            notificationSetting = new NotificationSetting();
+        }
+
+    }
+
 
     public static Account with(String email, String nickname, String password){
         Account account = new Account();

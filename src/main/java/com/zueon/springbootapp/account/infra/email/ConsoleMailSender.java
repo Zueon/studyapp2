@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.mail.internet.MimeMessage;
 import java.io.InputStream;
 
-@Profile("local")       // active profile이 local일 경우에만 빈이 등록되도록 한다.
+@Profile({"local", "local-db"})
 @Component              // 외부에서 주입해서 사용할 수 있도록 컴포넌트로 등록한다.
 @Log4j2                 // 로그를 남기기 위해서
 public class ConsoleMailSender implements JavaMailSender {      // 인터페이스 구현
