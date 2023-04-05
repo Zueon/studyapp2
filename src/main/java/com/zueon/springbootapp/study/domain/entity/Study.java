@@ -17,6 +17,13 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Getter
+@NamedEntityGraph(name = "Study.withAll", attributeNodes = {
+        @NamedAttributeNode("tags"),
+        @NamedAttributeNode("zones"),
+        @NamedAttributeNode("managers"),
+        @NamedAttributeNode("members"),
+
+})
 public class Study {
     @Id
     @GeneratedValue
