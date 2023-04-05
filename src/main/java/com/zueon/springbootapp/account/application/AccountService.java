@@ -8,7 +8,7 @@ import com.zueon.springbootapp.account.infra.AccountRepository;
 import com.zueon.springbootapp.config.AppProperties;
 import com.zueon.springbootapp.mail.EmailMessage;
 import com.zueon.springbootapp.mail.service.EmailService;
-import com.zueon.springbootapp.settings.controller.NotificationForm;
+import com.zueon.springbootapp.settings.controller.form.NotificationForm;
 import com.zueon.springbootapp.settings.controller.Profile;
 import com.zueon.springbootapp.tag.domain.entity.Tag;
 import com.zueon.springbootapp.zone.infra.ZoneRepository;

@@ -1,12 +1,11 @@
-package com.zueon.springbootapp.settings.controller;
+package com.zueon.springbootapp.settings.controller.form;
 
 import com.zueon.springbootapp.account.domain.entity.Account;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class NotificationForm {
     private boolean studyCreatedByEmail;
     private boolean studyCreatedByWeb;

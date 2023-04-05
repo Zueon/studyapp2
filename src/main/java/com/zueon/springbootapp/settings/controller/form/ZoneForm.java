@@ -1,4 +1,4 @@
-package com.zueon.springbootapp.settings.controller;
+package com.zueon.springbootapp.settings.controller.form;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.zueon.springbootapp.account.domain.entity;
 
 import com.zueon.springbootapp.domain.entity.AuditingEntity;
-import com.zueon.springbootapp.settings.controller.NotificationForm;
+import com.zueon.springbootapp.settings.controller.form.NotificationForm;
 import com.zueon.springbootapp.tag.domain.entity.Tag;
 import lombok.*;
 import org.hibernate.Hibernate;

@@ -1,4 +1,4 @@
-package com.zueon.springbootapp.settings.controller;
+package com.zueon.springbootapp.settings.controller.form;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class NicknameForm {
     @NotBlank
     @Length(min = 3, max = 20)

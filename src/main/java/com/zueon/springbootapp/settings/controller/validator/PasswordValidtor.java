@@ -1,7 +1,7 @@
 package com.zueon.springbootapp.settings.controller.validator;
 
 
-import com.zueon.springbootapp.settings.controller.PasswordForm;
+import com.zueon.springbootapp.settings.controller.form.PasswordForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

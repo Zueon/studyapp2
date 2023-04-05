@@ -2,7 +2,7 @@ package com.zueon.springbootapp.settings.controller.validator;
 
 import com.zueon.springbootapp.account.domain.entity.Account;
 import com.zueon.springbootapp.account.infra.AccountRepository;
-import com.zueon.springbootapp.settings.controller.NicknameForm;
+import com.zueon.springbootapp.settings.controller.form.NicknameForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
