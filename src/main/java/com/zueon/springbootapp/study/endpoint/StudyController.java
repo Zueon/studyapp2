@@ -9,6 +9,7 @@ import com.zueon.springbootapp.study.endpoint.validator.StudyFormValidator;
 import com.zueon.springbootapp.study.infra.StudyRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequiredArgsConstructor
+@Log4j2
 public class StudyController {
     private final StudyService studyService;
     private final StudyFormValidator studyFormValidator;
@@ -58,4 +60,13 @@ public class StudyController {
 
         return "study/view";
     }
+
+    @GetMapping("/study/{path}/members")
+    public String viewStudyMembers(@CurrentUser Account account, @PathVariable String path, Model model) {
+        model.addAttribute(account);
+        model.addAttribute("study",studyRepository.findByPath(path));
+
+        return "study/members";
+    }
 }
+

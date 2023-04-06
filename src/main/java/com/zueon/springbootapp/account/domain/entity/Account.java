@@ -118,7 +118,7 @@ public class Account extends AuditingEntity {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return getClass().hashCode();
     }
 
     @Override

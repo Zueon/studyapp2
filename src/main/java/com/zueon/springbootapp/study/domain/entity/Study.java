@@ -7,7 +7,6 @@ import com.zueon.springbootapp.study.endpoint.form.StudyForm;
 import com.zueon.springbootapp.tag.domain.entity.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
