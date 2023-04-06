@@ -3,6 +3,7 @@ package com.zueon.springbootapp.study.domain.entity;
 import com.zueon.springbootapp.account.domain.UserAccount;
 import com.zueon.springbootapp.account.domain.entity.Account;
 import com.zueon.springbootapp.account.domain.entity.Zone;
+import com.zueon.springbootapp.study.endpoint.form.StudyDescriptionForm;
 import com.zueon.springbootapp.study.endpoint.form.StudyForm;
 import com.zueon.springbootapp.tag.domain.entity.Tag;
 import lombok.Getter;
@@ -103,4 +104,8 @@ public class Study {
 
     }
 
+    public void updateDescription(StudyDescriptionForm studyDescriptionForm) {
+        this.shortDescription = studyDescriptionForm.getShortDescription();
+        this.fullDescription = studyDescriptionForm.getFullDescription();
+    }
 }

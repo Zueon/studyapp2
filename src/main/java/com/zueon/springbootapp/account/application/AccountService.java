@@ -87,6 +87,11 @@ public class AccountService implements UserDetailsService {
 
     }
 
+    public Account getAccountBy(String nickname) {
+        return Optional.ofNullable(accountRepository.findByNickname(nickname))
+                .orElseThrow(() -> new IllegalArgumentException(nickname + "에 해당하는 사용자가 존재하지 않습니다."));
+    }
+
     public void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(new UserAccount(account), account.getPassword(), Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
